@@ -67,3 +67,8 @@ def updatelogic(request):
 
     emp.save()
     return HttpResponse("ok")
+
+
+def emp(request):
+
+    print('123')
