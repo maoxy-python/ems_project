@@ -74,5 +74,4 @@ def emp(request):
     print('123')
     print('165优秀')
     print('678')
-    print('000')
     return HttpResponse('项目完成')
