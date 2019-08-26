@@ -75,3 +75,7 @@ def emp(request):
     print('165优秀')
     print('678')
     return HttpResponse('项目完成')
+
+
+def demo(request):
+    pass
