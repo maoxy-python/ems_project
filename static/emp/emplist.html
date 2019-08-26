@@ -1,0 +1,128 @@
+<html>
+	<head>
+		<title>emplist</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css"
+			href="../css/style.css" />
+        <script src="../js/jquery-3.3.1.min.js"></script>
+
+	    <script>
+
+
+
+            function getemplist(){
+                $.ajax({
+                    type:"get",
+                    url:"/emp/emplist/",
+                    success:function (data) {
+                        console.log(data)
+                        var emps = data.emps
+                        str="<tr class=\"table_header\">\n" +
+                            "\t\t\t\t\t\t\t<td>\n" +
+                            "\t\t\t\t\t\t\t\tID\n" +
+                            "\t\t\t\t\t\t\t</td>\n" +
+                            "\t\t\t\t\t\t\t<td>\n" +
+                            "\t\t\t\t\t\t\t\tHeadPic\n" +
+                            "\t\t\t\t\t\t\t</td>\n" +
+                            "                            <td>\n" +
+                            "\t\t\t\t\t\t\t\tName\n" +
+                            "\t\t\t\t\t\t\t</td>\n" +
+                            "\t\t\t\t\t\t\t<td>\n" +
+                            "\t\t\t\t\t\t\t\tAge\n" +
+                            "\t\t\t\t\t\t\t</td>\n" +
+                            "\t\t\t\t\t\t\t<td>\n" +
+                            "\t\t\t\t\t\t\t\tSalary\n" +
+                            "\t\t\t\t\t\t\t</td>\n" +
+                            "                            <td>\n" +
+                            "\t\t\t\t\t\t\t\tBirthday\n" +
+                            "\t\t\t\t\t\t\t</td>\n" +
+                            "\t\t\t\t\t\t\t<td>\n" +
+                            "\t\t\t\t\t\t\t\tOperation\n" +
+                            "\t\t\t\t\t\t\t</td>\n" +
+                            "\t\t\t\t\t\t</tr>"
+                        for(var i = 0 ;i<emps.length; i ++){
+                            var emp = emps[i]
+                            str += "<tr class=\"row1\">"
+                            str += "<td>"+emp.id+"</td>"
+                            str += "<td><img src=\"/static/media/"+emp.url+"\" width=\"50px\" >"+"</td>"
+                            str += "<td>"+emp.name+"</td>"
+                            str += "<td>"+emp.age+"</td>"
+                            str += "<td>"+emp.birthday+"</td>"
+                            str += "<td>"+emp.salary+"</td>"
+                            str += "<td>"
+                            str += "<a href=\"javascript:void(0)\" onclick=\"deleteemp(" + emp.id + ")\">"+"delete</a> "
+                            str += "<a href=\"/static/emp/updateEmp.html?id=" + emp.id +"\" >update</a>"
+                            str+="</td>"
+                            str += "</tr>"
+                        }
+                        $("#td").html(str)
+                    }
+                })
+            }
+
+            $(function () {
+                getemplist()
+            })
+
+           function deleteemp(id) {
+               $.ajax({
+                   type: "get",
+                   url:"/emp/delete/?id="+id,
+                   success:function (data) {
+                       if (data === "ok"){
+                           alert("删除成功")
+                           getemplist()
+                       } else {
+                           alert("删除失败")
+                       }
+                   }
+               })
+           }
+        </script>
+    </head>
+	<body>
+		<div id="wrap">
+			<div id="top_content"> 
+				<div id="header">
+					<div id="rightheader">
+						<p>
+							2009/11/20
+							<br />
+						</p>
+					</div>
+					<div id="topheader">
+						<h1 id="title">
+							<a href="#">main</a>
+						</h1>
+					</div>
+					<div id="navigation">
+					</div>
+				</div>
+				<div id="content">
+					<p id="whereami">
+					</p>
+					<h1>
+						Welcome!
+					</h1>
+					<table class="table" id="td">
+
+
+					</table>
+                <div style="text-align: center">
+                </div>
+
+					<p>
+						<input type="button" class="button" value="Add Employee" onclick="location='/static/emp/addEmp.html'"/>
+					</p>
+				</div>
+			</div>
+			<div id="footer">
+				<div id="footer_bg">
+				ABC@126.com
+				</div>
+			</div>
+		</div>
+	</body>
+
+
+</html>
